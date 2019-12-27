@@ -18,6 +18,7 @@ namespace cigar {
             papers = db.GetCollection<Paper>("papers");
 
             options = new JsonSerializerOptions {
+                PropertyNamingPolicy = new CamelBack(),
                 PropertyNameCaseInsensitive = true,
             };
         }
@@ -26,7 +27,7 @@ namespace cigar {
         public async Task<Response> CreatePaper(Request req) {
             try {
                 var paper = await JsonSerializer.DeserializeAsync<Paper>(req.Body, options);
-                if (paper.Nickname == null || paper.Body == null) {
+                if (string.IsNullOrEmpty(paper.Nickname) || string.IsNullOrEmpty(paper.Body)) {
                     return ErrorResp("invalid nickname or body");
                 }
                 papers.Insert(paper);

@@ -20,6 +20,7 @@
                 </div>
                 <div class="margin"></div>
                 <textarea
+                    id="content"
                     autocapitalize="false" autocomplete="false" spellcheck="false"
                     placeholder="메시지를 남기고 다른 사람들이 남긴 메시지도 봐보세요"></textarea>
             </div>
@@ -31,16 +32,20 @@
         </div>
 
         <script>
-            $('textarea').autoResize();
-            $('#nickname').focus();
+            var nickname = $('#nickname');
+            var content = $('#content');
+            var publicChk = $('#public');
+            var privateChk = $('#private');
+            var submitBtn = $('#submit');
+            var isPublic = true;
 
-            publicChk = $('#public');
-            privateChk = $('#private');
+            changeState(isPublic);
+            content.autoResize();
+            nickname.focus();
             
             publicChk.click(() => changeState(true));
             privateChk.click(() => changeState(false));
-            var isPublic = true;
-            changeState(isPublic);
+            submitBtn.click(submit);
 
             function changeState(pub) {
                 isPublic = pub;
@@ -57,7 +62,23 @@
                     privateChk.addClass("active");
                 }
             }
-            
+
+            function submit() {
+                var data = {
+                    public: isPublic,
+                    nickname: nickname.val(),
+                    body: content.val(),
+                };
+
+                if (data.nickname === '' || data.body === '') {
+                    alert("이름이나 내용을 작성해주셔야죠..ㅠ");
+                    return;
+                }
+
+                $.post("papers", JSON.stringify(data), resp => {
+                    window.location.href = 'board.html';
+                });
+            }            
         </script>
     </body>
 </html>
