@@ -22,7 +22,7 @@ namespace cigar {
             };
         }
 
-        [Post("/cigar/papers")]
+        [Post("/papers")]
         public async Task<Response> CreatePaper(Request req) {
             try {
                 var paper = await JsonSerializer.DeserializeAsync<Paper>(req.Body, options);
@@ -40,7 +40,7 @@ namespace cigar {
             }
         }
 
-        [Get("/cigar/papers")]
+        [Get("/papers")]
         public Response GetPapers(Request req) {
             return new JsonResponse(JsonSerializer.Serialize(papers.Find(p => p.Public), options));
         }

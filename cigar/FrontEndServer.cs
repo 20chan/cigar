@@ -11,9 +11,9 @@ namespace cigar {
             Index = index;
         }
 
-        [Get("/cigar/{f0}")]
-        [Get("/cigar/{f0}/{f1}")]
-        [Get("/cigar/{f0}/{f1}/{f2}")]
+        [Get("/{f0}")]
+        [Get("/{f0}/{f1}")]
+        [Get("/{f0}/{f1}/{f2}")]
         public Response RouteFile(Request req) {
             var path = req.Uri.AbsolutePath.Substring(1);
             if (string.IsNullOrEmpty(path)) {
