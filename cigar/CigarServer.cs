@@ -30,6 +30,10 @@ namespace cigar {
                 if (string.IsNullOrEmpty(paper.Nickname) || string.IsNullOrEmpty(paper.Body)) {
                     return ErrorResp("invalid nickname or body");
                 }
+
+                paper.Nickname = Encode(paper.Nickname);
+                paper.Body = Encode(paper.Body);
+
                 papers.Insert(paper);
                 return new TextResponse("success");
             }
@@ -39,6 +43,10 @@ namespace cigar {
             catch (Exception ex) {
                 return ErrorResp("server error", ex, StatusCode.InternalServerError);
             }
+        }
+
+        private static string Encode(string s) {
+            return Microsoft.Security.Application.Encoder.HtmlEncode(s);
         }
 
         [Get("/papers")]
