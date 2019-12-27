@@ -27,6 +27,7 @@ namespace cigar {
         public async Task<Response> CreatePaper(Request req) {
             try {
                 var paper = await JsonSerializer.DeserializeAsync<Paper>(req.Body, options);
+                Console.WriteLine(JsonSerializer.Serialize(paper));
                 if (string.IsNullOrEmpty(paper.Nickname) || string.IsNullOrEmpty(paper.Body)) {
                     return ErrorResp("invalid nickname or body");
                 }
