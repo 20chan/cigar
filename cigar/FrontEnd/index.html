@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>rolling paper</title>
+        <link rel="stylesheet" type="text/css" href="fonts/webfont.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+        <script src="https://j11y.io/demos/plugins/jQuery/autoresize.jquery.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <pre id="title">rollin' paper</pre>
+            <div class="form">
+                <div id="nicknameArea">
+                    <pre class="inline">nickname: </pre><input id="nickname">
+                </div>
+                <div class="margin"></div>
+                <textarea
+                    autocapitalize="false" autocomplete="false" spellcheck="false"
+                    placeholder="메시지를 남기고 다른 사람들이 남긴 메시지도 봐보세요"></textarea>
+            </div>
+            <div>
+                <pre class="btn chk active" id="public">public [x]</pre>
+                <pre class="btn chk" id="private">private [ ]</pre>
+            </div>
+            <pre class="btn active" id="submit">[submit]</pre>
+        </div>
+
+        <script>
+            $('textarea').autoResize();
+            $('#nickname').focus();
+
+            publicChk = $('#public');
+            privateChk = $('#private');
+            
+            publicChk.click(() => changeState(true));
+            privateChk.click(() => changeState(false));
+            var isPublic = true;
+            changeState(isPublic);
+
+            function changeState(pub) {
+                isPublic = pub;
+                if (pub) {
+                    publicChk.html("public [x]");
+                    privateChk.html("private [ ]");
+                    publicChk.addClass("active");
+                    privateChk.removeClass("active");
+                }
+                else {
+                    publicChk.html("public [ ]");
+                    privateChk.html("private [x]");
+                    publicChk.removeClass("active");
+                    privateChk.addClass("active");
+                }
+            }
+            
+        </script>
+    </body>
+</html>
